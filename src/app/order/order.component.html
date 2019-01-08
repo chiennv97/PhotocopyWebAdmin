@@ -57,9 +57,9 @@
                                        aria-label="numberOfPrint" aria-describedby="basic-addon1"
                                        [(ngModel)]="numberOfPrint" name="numberOfPrint"></div>
         </div>
-        <div *ngIf="page!==undefined && numberOfPrint !== ''">Tiền: {{page}} x {{numberOfPrint}} x {{price}} =
-          {{page*price*numberOfPrint | number}} VNĐ
-        </div>
+        <!--<div *ngIf="page!==undefined && numberOfPrint !== ''">Tiền: {{page}} x {{numberOfPrint}} x {{price}} =-->
+          <!--{{page*price*numberOfPrint | number}} VNĐ-->
+        <!--</div>-->
         <div *ngIf="percentage | async as pct">
         <span>
           <progress class="progress is-info"

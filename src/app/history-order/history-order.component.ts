@@ -13,6 +13,7 @@ import {AuthService} from '../core/auth.service';
 })
 export class HistoryOrderComponent implements OnInit {
   orders$: AngularFireList<any>;
+  message$: AngularFireList<any>;
   items: Observable<any[]>;
   user: FirebaseUserModel = new FirebaseUserModel();
   constructor(
@@ -37,8 +38,9 @@ export class HistoryOrderComponent implements OnInit {
       }, err => {
         // this.router.navigate(['/login']);
       });
-    this.orders$ = this.db.list('/orders/' + this.getUserId());
+    this.orders$ = this.db.list('/orders');
     this.items = this.orders$.valueChanges();
+    this.message$ = this.db.list('/message');
   }
 
   ngOnInit() {
@@ -54,14 +56,19 @@ export class HistoryOrderComponent implements OnInit {
         console.log('Logout error', error);
       });
   }
-  print(id) {
+  print(id, status) {
     console.log(id);
-    const timeCreate = new Date().getTime();
-    this.orders$.update(id.toString(),  { status: 'Printed', timeFinish: timeCreate });
+    if (status === 'wait') {
+      const timeCreate = new Date().getTime();
+      this.orders$.update(id.toString(),  { status: 'Printed', timeFinish: timeCreate });
+    }
   }
-  ship(id) {
-    const timeCreate = new Date().getTime();
-    this.orders$.update(id.toString(),  { status: 'Shiped', timeFinish: timeCreate });
+  ship(id, status, name) {
+    if (status === 'Printed') {
+      const timeCreate = new Date().getTime();
+      this.orders$.update(id.toString(),  { status: 'Shiped', timeFinish: timeCreate });
+      this.message$.update(id.toString(), {name: name});
+    }
   }
   getStylePrint(status) {
     var styles;
@@ -75,7 +82,7 @@ export class HistoryOrderComponent implements OnInit {
   }
   getStyleShip(status) {
     var styles;
-    if (status === 'wait') {
+    if (status === 'wait' || status === 'Shiped') {
       styles = {'background-color': '#d2d2d2'};
     } else  {
       styles = {'background-color': '#4CAF50'};

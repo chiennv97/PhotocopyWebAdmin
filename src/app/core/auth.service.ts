@@ -8,6 +8,7 @@ import {switchMap} from 'rxjs/operators';
 import {of} from 'rxjs/internal/observable/of';
 import { AngularFireDatabase, AngularFireList } from 'angularfire2/database';
 import {UserIdService} from './userId.service';
+import Swal from 'sweetalert2';
 
 interface User {
   uid: string;
@@ -80,6 +81,15 @@ export class AuthService {
           // userRef.set(data, { merge: true });
           this.users$ = this.af.list('/users');
           // this.users$.update(res.user.uid, data);
+          if (res.user.uid !== 'lCot8XRm2jNCYchutulTYL7ANIq2') {
+            Swal({
+              type: 'error',
+              title: 'Lỗi! Vui lòng thử lại',
+              text: 'Bạn không có quyền admin của shop',
+              timer: 3000,
+            });
+            reject(res);
+          }
           this.users$.snapshotChanges()
             .subscribe(actions => {
               var didLogin = 0;
@@ -118,7 +128,7 @@ export class AuthService {
           console.log(err);
           reject(err);
         });
-    })
+    });
   }
 
   doRegister(value){
