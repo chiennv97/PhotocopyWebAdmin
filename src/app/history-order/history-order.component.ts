@@ -66,7 +66,7 @@ export class HistoryOrderComponent implements OnInit {
   ship(id, status, name) {
     if (status === 'Printed') {
       const timeCreate = new Date().getTime();
-      this.orders$.update(id.toString(),  { status: 'Shiped', timeFinish: timeCreate });
+      this.orders$.update(id.toString(),  { status: 'Shipped', timeFinish: timeCreate });
       this.message$.update(id.toString(), {name: name});
     }
   }
@@ -82,7 +82,7 @@ export class HistoryOrderComponent implements OnInit {
   }
   getStyleShip(status) {
     var styles;
-    if (status === 'wait' || status === 'Shiped') {
+    if (status === 'wait' || status === 'Shipped') {
       styles = {'background-color': '#d2d2d2'};
     } else  {
       styles = {'background-color': '#4CAF50'};
