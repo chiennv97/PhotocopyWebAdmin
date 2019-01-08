@@ -13,6 +13,6 @@ export const rootRouterConfig: Routes = [
   { path: 'home', component: HomeComponent},
   { path: 'login', component: LoginComponent, canActivate: [AuthGuard] },
   // { path: 'register', component: RegisterComponent, canActivate: [AuthGuard] },
-  { path: 'order', component: OrderComponent},
-  { path: 'history', component: HistoryOrderComponent}
+  { path: 'history', component: OrderComponent},
+  { path: 'order', component: HistoryOrderComponent}
 ];

@@ -4,6 +4,7 @@ import { AngularFireStorage, AngularFireUploadTask } from 'angularfire2/storage'
 import { Observable } from 'rxjs';
 import {FirebaseUserModel} from '../core/user.model';
 import {UserService} from '../core/user.service';
+import { Location } from '@angular/common';
 import {AuthService} from '../core/auth.service';
 @Component({
   selector: 'app-history-order',
@@ -18,7 +19,8 @@ export class HistoryOrderComponent implements OnInit {
     public db: AngularFireDatabase,
     public storage: AngularFireStorage,
     public userService: UserService,
-    public authService: AuthService
+    public authService: AuthService,
+    private location: Location,
   ) {
     this.userService.getCurrentUser()
       .then(res => {
@@ -51,5 +53,34 @@ export class HistoryOrderComponent implements OnInit {
       }, (error) => {
         console.log('Logout error', error);
       });
+  }
+  print(id) {
+    console.log(id);
+    const timeCreate = new Date().getTime();
+    this.orders$.update(id.toString(),  { status: 'Printed', timeFinish: timeCreate });
+  }
+  ship(id) {
+    const timeCreate = new Date().getTime();
+    this.orders$.update(id.toString(),  { status: 'Shiped', timeFinish: timeCreate });
+  }
+  getStylePrint(status) {
+    var styles;
+    if (status === 'wait') {
+      styles = {'background-color': '#4CAF50'};
+    } else  {
+      styles = {'background-color': '#d2d2d2'};
+    }
+
+    return styles;
+  }
+  getStyleShip(status) {
+    var styles;
+    if (status === 'wait') {
+      styles = {'background-color': '#d2d2d2'};
+    } else  {
+      styles = {'background-color': '#4CAF50'};
+    }
+
+    return styles;
   }
 }

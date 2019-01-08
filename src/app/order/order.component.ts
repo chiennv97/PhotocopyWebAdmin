@@ -191,11 +191,11 @@ export class OrderComponent {
     const reader = new FileReader();
     reader.readAsBinaryString(event.target.files[0]);
     // comment when run
-    const seft = this;
-    reader.onloadend = function() {
-      const count = reader.result.match(/\/Type[\s]*\/Page[^s]/g).length;
-      seft.page = count;
-    };
+    // const seft = this;
+    // reader.onloadend = function() {
+    //   const count = reader.result.match(/\/Type[\s]*\/Page[^s]/g).length;
+    //   seft.page = count;
+    // };
     // this.startUpload(event.target.files);
   }
   createForm(name) {
